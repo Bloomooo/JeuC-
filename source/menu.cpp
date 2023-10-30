@@ -1,22 +1,25 @@
 #include "../en-tete/Menu.hpp"
+#include "../en-tete/Button.hpp"
+#include "../en-tete/Input.hpp"
 
+RenderWindow window; ///< Fenêtre principale du jeu.
+VideoMode ecran; ///< Mode vidéo pour la fenêtre.
+Font* font = nullptr; ///< Pointeur vers l'objet Font pour charger la police de caractères.
+Text textStart; ///< Texte pour le bouton "Start".
+Text textExit; ///< Texte pour le bouton "Exit".
+Input input; ///< Gestionnaire d'entrée utilisateur.
+int posY = 0; ///< Position en Y.
+int posX = 0; ///< Position en X.
+ContextSettings settings; ///< Paramètres de contexte de la fenêtre.
+Event event; ///< Événement pour la boucle principale.
+Button buttonStart(Vector2f(100.0f, 100.0f), textStart); ///< Bouton "Start" avec sa position initiale.
+Button buttonExit(Vector2f(500.0f, 200.0f), textExit); ///< Bouton "Exit" avec sa position initiale.
+Texture buttonStartTexture; ///< Texture pour le bouton "Start".
 
-RenderWindow window;
-VideoMode ecran;
-Font* font = nullptr;
-Text textStart;
-Text textExit;
-Input input;
-int posY = 0;
-int posX = 0;
-//CircleShape circle(100);
-ContextSettings settings;
-Event event;
-Button buttonStart(Vector2f(100.0f, 100.0f), textStart);
-Button buttonExit(Vector2f(500.0f, 200.0f), textExit);
-Texture buttonStartTexture;
-
-Menu::Menu(){
+/**
+ * @brief Constructeur de la classe Menu.
+ */
+Menu::Menu() {
     try {
         loadFont();
         loadTexture();
@@ -27,8 +30,11 @@ Menu::Menu(){
     }
 }
 
+/**
+ * @brief Fonction principale de l'application. Gère la boucle de jeu.
+ */
 void Menu::lunchGame() {
-    settings.antialiasingLevel= 8;
+    settings.antialiasingLevel = 8;
     ecran = VideoMode::getDesktopMode();  
     try {
         window.create(ecran, "ez", Style::Default, settings);
@@ -41,15 +47,13 @@ void Menu::lunchGame() {
         buttonExit.setText(textExit);
         buttonStart.setTextPosition(textStart);
         buttonExit.setTextPosition(textExit);
-        //circle.setFillColor(Color::Red);
+
         while (window.isOpen()) {
             while (window.pollEvent(event)) {
                 input.eventListener(event, window);
-                //checkButton();
+                input.eventButton(event, &buttonStart, &buttonExit, window);
             }
-            //textStart.setPosition(buttonStart.getPosition()+buttonStart.getPosition()/3.6f);
-            //textExit.setPosition(buttonExit.getPosition()+buttonExit.getPosition()/5.0f);
-            
+
             windowDraw(window);
         }
     } catch (const exception& e) {
@@ -59,22 +63,33 @@ void Menu::lunchGame() {
     }
 }
 
-
-void Menu::loadFont(){
+/**
+ * @brief Charge la police de caractères depuis un fichier.
+ */
+void Menu::loadFont() {
     font = new Font;
-    if(!font->loadFromFile("ressource/poppins.ttf")){
-        cout<<"Error loading font"<<endl;
+    if (!font->loadFromFile("ressource/poppins.ttf")) {
+        cout << "Error loading font" << endl;
         delete font;
         font = nullptr;
     }
 }
 
-void Menu::loadTexture(){
-    if(!buttonStartTexture.loadFromFile("ressource/start.jpg")){
-        cout <<"Error, Texture not loaded"<<endl;
+/**
+ * @brief Charge une texture depuis un fichier.
+ */
+void Menu::loadTexture() {
+    if (!buttonStartTexture.loadFromFile("ressource/start.jpg")) {
+        cout <<"Error, Texture not loaded" << endl;
     }
 }
-void Menu::setText(Text& texte, string chaine){
+
+/**
+ * @brief Configure les propriétés du texte.
+ * @param texte Référence vers l'objet Text.
+ * @param chaine Chaîne de caractères du texte.
+ */
+void Menu::setText(Text& texte, string chaine) {
     texte.setFont(*font);
     texte.setString(chaine);
     texte.setCharacterSize(30);
@@ -82,57 +97,15 @@ void Menu::setText(Text& texte, string chaine){
     texte.setStyle(Text::Bold | Text::Underlined);
 }
 
-/*
-void Menu::checkButton(){
-    if(input.getButton().left){
-        posX-= 10;
-        if(posX < 0){
-            posX = 0;
-        }
-        setText(texte,to_string(posX));
-        circle.setPosition(posX,posY);
-    }
-    else if(input.getButton().right){
-        
-        posX+=10;
-        if(posX > static_cast<int>(ecran.width)-200){
-            posX = ecran.width-200;
-        }
-        setText(texte,to_string(posX));
-        circle.setPosition(posX,posY);
-    }
-    else if(input.getButton().up){
-        posY-=10;
-        if(posY < 0){
-            posY = 0;
-        }
-        setText(texte,to_string(posY));
-        circle.setPosition(posX,posY);
-    }
-    else if(input.getButton().down){
-        posY+=10;
-        if(posY > static_cast<int>(ecran.height)-200){
-            posY = ecran.height-200;
-        }
-        setText(texte,to_string(posY));
-        circle.setPosition(posX,posY);
-    }
-    else if(input.getButton().attack){
-        setText(texte,"Attaquez");
-    }
-    else if(input.getButton().escape){
-        window.close();
-    }
-
-}*/
-void Menu::windowDraw(RenderWindow& window){
-    
+/**
+ * @brief Gère le dessin des éléments dans la fenêtre.
+ * @param window Référence vers la fenêtre de rendu.
+ */
+void Menu::windowDraw(RenderWindow& window) {
     window.clear(Color::Black);
-    //window.draw(circle);
     window.draw(buttonStart);
     window.draw(buttonExit);
     window.draw(textExit);
     window.draw(textStart);
     window.display();
 }
-
