@@ -69,6 +69,17 @@ public:
     void setTextPosition(Text &text);
 
     /**
+     * @brief Redéfinition de la fonction de dessin.
+     *
+     * Cette fonction est utilisée pour dessiner l'objet graphique sur une cible (par exemple, une fenêtre) en utilisant les états de rendu spécifiés.
+     * Elle doit être redéfinie dans les classes dérivées pour effectuer le dessin spécifique à l'objet.
+     *
+     * @param target La cible de rendu sur laquelle l'objet doit être dessiné.
+     * @param states Les états de rendu à appliquer lors du dessin.
+     */
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    /**
      * @brief Récupère la taille actuelle du bouton.
      * @return La taille du bouton.
      */
