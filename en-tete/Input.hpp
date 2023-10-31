@@ -2,7 +2,8 @@
 #define INPUT_HPP
 
 #include <SFML/Graphics.hpp>
-#include "../en-tete/Button.hpp"
+#include "../en-tete/Menu.hpp"
+
 #include <iostream>
 
 using namespace std;
@@ -38,6 +39,8 @@ public:
     
 private:
     KeyState key; ///< État des touches.
+    Game game; ///< Instance de la classe Game.
+    Menu menu; ///< Instance de la classe Menu.
 };
 
 #endif // INPUT_HPP

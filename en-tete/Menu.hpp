@@ -5,6 +5,10 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <string>
+#include "../en-tete/Button.hpp"
+
+#include "../en-tete/Game.hpp"
+#include "../en-tete/GameState.hpp"
 
 using namespace std;
 using namespace sf;
@@ -42,12 +46,25 @@ public:
      */
     void setText(Text &text, string chaine);
 
+    void setTextTitle(Text &text, string chaine);
+
     /**
      * @brief Affiche les éléments du menu dans la fenêtre.
      * @param window La fenêtre de rendu.
      */
     void windowDraw(RenderWindow& window);
 
+    /**
+     * @brief Redimentionne le background à la taille de la fenêtre.
+    */
+    void rediBackground();
+
+    void changeGameState(GameState newState);
+
+private:
+    Texture backgroundTexture;
+    Sprite backgroundSprite;
+    bool active = true;
 };
 
 #endif // !MENU_HPP

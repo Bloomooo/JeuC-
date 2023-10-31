@@ -1,5 +1,7 @@
 #include "../en-tete/Input.hpp"
+#include "../en-tete/Direction.hpp"
 
+Direction direction;
 /**
  * @brief Constructeur de la classe Input.
  * 
@@ -44,15 +46,19 @@ void Input::eventListener(Event event, RenderWindow& window) {
             key.escape = true;
         }
         if (event.key.code == Keyboard::Z) {
+            direction = Direction::UP;
             key.up = true;
         }
         if (event.key.code == Keyboard::S) {
+            direction = Direction::DOWN;
             key.down = true;
         }
         if (event.key.code == Keyboard::Q) {
+            direction = Direction::RIGHT;
             key.left = true;
         }
         if (event.key.code == Keyboard::D) {
+            direction = Direction::LEFT;
             key.right = true;
         }
     }
@@ -114,6 +120,7 @@ void Input::eventButton(Event event, Button* buttonStart, Button* buttonExit, Re
         if (buttonStartBounds.contains(mouseX, mouseY)) {
             cout << "Button Start Clicked" << endl;
             // Exécuter l'action associée au bouton "Start"
+            this->menu.changeGameState(GameState::GAME);
         }
 
         // Vérifier si le clic de souris est à l'intérieur des limites du bouton "Exit"
