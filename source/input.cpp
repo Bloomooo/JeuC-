@@ -2,6 +2,7 @@
 #include "../en-tete/Direction.hpp"
 
 Direction direction;
+bool moved = false;
 /**
  * @brief Constructeur de la classe Input.
  * 
@@ -38,63 +39,58 @@ void Input::eventListener(Event event, RenderWindow& window) {
     if (event.type == Event::Closed) {
         // Si l'événement est la fermeture de la fenêtre, on ferme la fenêtre de l'application
         window.close();
-    }
-
-    if (event.type == Event::KeyPressed) {
+    }else if (event.type == Event::MouseButtonPressed || event.type == Event::MouseButtonReleased || event.type == Event::MouseMoved){
+        moved = false;
+    }else if (event.type == Event::KeyPressed) {
         // Si une touche est pressée, on vérifie laquelle
         if (event.key.code == Keyboard::Escape) {
             key.escape = true;
+            moved = false;
         }
         if (event.key.code == Keyboard::Z) {
-            direction = Direction::UP;
             key.up = true;
+            this->game.currentDirection(Direction::UP);
+            moved = true;
         }
         if (event.key.code == Keyboard::S) {
-            direction = Direction::DOWN;
             key.down = true;
+            this->game.currentDirection(Direction::DOWN);
+            moved = true;
         }
         if (event.key.code == Keyboard::Q) {
-            direction = Direction::RIGHT;
             key.left = true;
+            this->game.currentDirection(Direction::LEFT);
+            moved = true;
         }
         if (event.key.code == Keyboard::D) {
-            direction = Direction::LEFT;
             key.right = true;
+            this->game.currentDirection(Direction::RIGHT);
+            moved = true;
         }
-    }
-
-    if (event.type == Event::KeyReleased) {
+    }else if (event.type == Event::KeyReleased) {
         // Si une touche est relâchée, on vérifie laquelle
         if (event.key.code == Keyboard::Escape) {
             key.escape = false;
+            moved = false;
         }
         if (event.key.code == Keyboard::Z) {
             key.up = false;
+            moved = false;
         }
         if (event.key.code == Keyboard::S) {
             key.down = false;
+            moved = false;
         }
         if (event.key.code == Keyboard::Q) {
             key.left = false;
+            moved = false;
         }
         if (event.key.code == Keyboard::D) {
             key.right = false;
+            moved = false;
         }
     }
 
-    if (event.type == Event::MouseButtonPressed) {
-        // Si un bouton de la souris est pressé, on vérifie lequel
-        if (event.mouseButton.button == Mouse::Left) {
-            key.attack = true;
-        }
-    }
-
-    if (event.type == Event::MouseButtonReleased) {
-        // Si un bouton de la souris est relâché, on vérifie lequel
-        if (event.mouseButton.button == Mouse::Left) {
-            key.attack = false;
-        }
-    }
 }
 
 /**
@@ -131,4 +127,8 @@ void Input::eventButton(Event event, Button* buttonStart, Button* buttonExit, Re
             window.close();
         }
     }
+}
+
+bool Input::isMoving(){
+    return moved;
 }

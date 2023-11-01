@@ -14,13 +14,14 @@ public:
     Game();
     void loadTextures();
     void drawGame(RenderWindow& window);
-    
+    void currentDirection(Direction direction);
+    void setTexturePos(int posX, int posY);
+    string directionToString(Direction direction);
+
 private:
     Texture perso;
     Sprite persoSprite;
-    
-    Direction direction;
-    
+    Vector2i animation;
 };
 
 #endif // !GAME_HPP

@@ -36,6 +36,8 @@ public:
     /// Récupère l'état actuel des touches.
     /// @return Structure KeyState représentant l'état des touches.
     KeyState getKeyState();
+
+    bool isMoving();
     
 private:
     KeyState key; ///< État des touches.

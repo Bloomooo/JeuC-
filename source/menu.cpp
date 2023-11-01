@@ -59,8 +59,13 @@ void Menu::lunchGame() {
                     windowDraw(window);
                     input.eventButton(event, &buttonStart, &buttonExit, window);
                 }else if(gameState == GameState::GAME){
+                   
+                    if (event.type != Event::MouseMoved && event.type != Event::MouseButtonPressed && event.type != Event::MouseButtonReleased) {
+                        input.eventListener(event, window);
+                    }
+                    checkKeyState();
+                    
                     game.drawGame(window);
-                    input.eventListener(event, window);
                 }
                 window.display();
             }
@@ -90,13 +95,14 @@ void Menu::loadFont() {
  * @brief Charge une texture depuis un fichier.
  */
 void Menu::loadTexture() {
-    if (!buttonStartTexture.loadFromFile("ressource/start.jpg")) {
+    if (!buttonStartTexture.loadFromFile("ressource/background.jpg")) {
         cout <<"Error, Texture not loaded" << endl;
     }
-    if(!this->backgroundTexture.loadFromFile("ressource/background.jpg")) {
+    if(!this->backgroundTexture.loadFromFile("ressource/seele.jpg")) {
         cout << "Error, Texture not loaded" << endl;
     }
     this->backgroundTexture.setSmooth(true);
+    this->backgroundTexture.setRepeated(true);
     this->backgroundSprite.setTexture(this->backgroundTexture);
 }
 
@@ -150,4 +156,33 @@ void Menu::rediBackground(){
 }
 void Menu::changeGameState(GameState newState) {
     gameState = newState;
+}
+
+void Menu::checkKeyState(){
+    if(input.getKeyState().left){
+        posX-=10;
+        if(posX <= 0){
+            posX = 0;
+        }
+    }
+    else if (input.getKeyState().right){
+        posX+=10;
+        if(posX >= static_cast<int>(ecran.width)-200){
+            posX = window.getSize().x;
+        }
+    }
+    else if (input.getKeyState().up){
+        posY-=10;
+        if(posY <=0 ){
+            posY = 0;
+        }
+    }
+    else if(input.getKeyState().down){
+        posY+=10;
+        if(posY >= static_cast<int>(ecran.height)-200){
+            posY = window.getSize().y;
+        }
+    }
+    game.setTexturePos(posX, posY);
+        
 }

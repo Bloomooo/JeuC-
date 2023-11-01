@@ -6,7 +6,6 @@
 #include <iostream>
 #include <string>
 #include "../en-tete/Button.hpp"
-
 #include "../en-tete/Game.hpp"
 #include "../en-tete/GameState.hpp"
 
@@ -60,6 +59,8 @@ public:
     void rediBackground();
 
     void changeGameState(GameState newState);
+
+    void checkKeyState();
 
 private:
     Texture backgroundTexture;

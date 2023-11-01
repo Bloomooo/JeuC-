@@ -3,7 +3,7 @@
 
 
 enum class Direction {
-    UP, DOWN, LEFT, RIGHT
+    DOWN, LEFT, RIGHT, UP
 };
 
 #endif // !DRECTION_HPP
