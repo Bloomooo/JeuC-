@@ -17,7 +17,7 @@ public:
     void currentDirection(Direction direction);
     void setTexturePos(int posX, int posY);
     string directionToString(Direction direction);
-
+    void viewLoad();
 private:
     Texture perso;
     Sprite persoSprite;

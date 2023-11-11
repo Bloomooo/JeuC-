@@ -8,6 +8,7 @@ Clock gameTime;
 float fpsCount = 0,
       switchFPS = 100,
       fpsSpeed = 500;
+View view;
 
 Game::Game(){
     this->animation.x = 0;
@@ -44,9 +45,25 @@ void Game::loadTextures(){
     this->persoSprite.setTextureRect(IntRect(this->animation.x * frameWidth, this->animation.y * frameHeight, frameWidth, frameHeight));
     
 }
+
+void Game::viewLoad(){
+    view.reset(FloatRect(0, 0, 1920, 1080));
+    Vector2f position(1920/2, 1080/2);
+    position.x = persoSprite.getPosition().x + 16-(1920/2); 
+    position.y = persoSprite.getPosition().y + 16-(1080/2); 
+    if (position.x < 0){
+        position.x = 0;
+    }
+    if(position.y < 0){
+        position.y = 0;
+    }
+    view.reset(FloatRect(position.x, position.y, 1920, 1080));
+}
 void Game::drawGame(RenderWindow& window){
     loadTextures();
+    viewLoad();
     window.clear();
+    window.setView(view);
     window.draw(this->persoSprite);
 }
 
