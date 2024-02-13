@@ -1,14 +1,10 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <iostream>
-#include <string>
+#include "../en-tete/Input.hpp"
+#include "../en-tete/Button.hpp"
+#include "../en-tete/Menu.hpp"
 
 using namespace sf;
 using namespace std;
 
-void eventListener(Event event, RenderWindow& window);
-void loadFont();
-void setText(Text &text, string chaine);
-void checkButton();

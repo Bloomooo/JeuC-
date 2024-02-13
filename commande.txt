@@ -1,3 +1,3 @@
-g++ -c main.cpp -I"C:\Autre\divertissement\c++\jeu\include"
-PS C:\Autre\divertissement\c++\jeu> g++ main.o -o main -L"C:\Autre\divertissement\c++\jeu\lib" -lsfml-graphics -lsfml-window -lsfml-system
-PS C:\Autre\divertissement\c++\jeu> ./main
+Pour les commandes suivantes de compilation placez vous à la racine du projet
+g++ -Wall -Wextra -g3 -o Binaries/main.exe source/*.cpp -Iinclude -Llib -lsfml-graphics -lsfml-window -lsfml-system
+Binaries/main.exe
